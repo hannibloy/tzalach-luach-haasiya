@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+<title>לוח העשייה צל"ח ארצי</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500&family=Karantina:wght@400;700&display=swap">
+<style>
+/* Layout: one RTL scroll, sticky year filter drives numbers, map, timeline and infrastructure. Anchor motif in gold. */
+:root{
+  --bg:#F6F2E7;--card:#FFFDF8;--cream:#F8F2E4;--navy:#1F456A;--ink:#1B2F45;--muted:#6B7C8F;
+  --gold:#B8975A;--gold-text:#7A5C24;--gold-light:#EFE3C8;--olive:#7A8B5C;--teal:#4E8A93;--info:#E3EEF3;
+  --line:#EFE3C8;--shadow:0 6px 18px rgba(31,69,106,.08);
+  --display:'Heebo',system-ui,sans-serif;--body:'Assistant','Heebo',system-ui,sans-serif;--quote:'Frank Ruhl Libre',Georgia,serif;--slogan:'Karantina','Heebo',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141E2B;--card:#1C2937;--cream:#182230;--navy:#DCE6F2;--ink:#EEF2F6;--muted:#9FB0C3;
+  --gold:#D4B576;--gold-text:#E2C78E;--gold-light:#3A3421;--olive:#9DB07E;--teal:#7FB7BF;--info:#223344;--line:#33415A;--shadow:0 6px 18px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141E2B;--card:#1C2937;--cream:#182230;--navy:#DCE6F2;--ink:#EEF2F6;--muted:#9FB0C3;
+  --gold:#D4B576;--gold-text:#E2C78E;--gold-light:#3A3421;--olive:#9DB07E;--teal:#7FB7BF;--info:#223344;--line:#33415A;--shadow:0 6px 18px rgba(0,0,0,.35);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;direction:rtl;text-align:right}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
+h1,h2,h3{font-family:var(--display);color:var(--navy);line-height:1.2;margin:0;text-wrap:balance}
+h1{font-size:36px;font-weight:800}h2{font-size:28px;font-weight:800}h3{font-size:20px;font-weight:800}
+p{margin:0}
+img{max-width:100%;height:auto;display:block}
+.ill{mix-blend-mode:multiply;filter:saturate(.92) sepia(.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ill{mix-blend-mode:normal;filter:none;border-radius:18px}}
+:root[data-theme="dark"] .ill{mix-blend-mode:normal;filter:none;border-radius:18px}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:40px}
+.muted{color:var(--muted)}
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand img{width:44px;height:44px}
+.brand span{font-family:var(--display);font-weight:800;font-size:18px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;font-family:var(--body);font-weight:700;font-size:16px;text-decoration:none;cursor:pointer;border:2px solid var(--navy);color:var(--navy);background:transparent}
+.btn.primary{background:var(--navy);color:var(--bg)}
+.btn.small{min-height:40px;padding:0 14px;font-size:14px}
+.btn:focus-visible,.pill:focus-visible,.acc-h:focus-visible,.pin:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+/* year filter */
+.filter{position:sticky;top:calc(64px + env(safe-area-inset-top,0px));z-index:8;background:var(--cream);border-bottom:1px solid var(--line)}
+.filter .wrap{display:flex;align-items:center;gap:10px;min-height:52px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
+.filter .wrap::-webkit-scrollbar{display:none}
+.pill{flex:0 0 auto;scroll-snap-align:start;min-height:36px;padding:4px 16px;border-radius:999px;border:1.5px solid var(--navy);background:transparent;color:var(--navy);font-family:var(--body);font-weight:700;font-size:15px;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--navy);color:var(--bg)}
+.pill.plan[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1B2F45}
+.showing{font-size:14px;color:var(--muted);padding-block:6px}
+/* hero */
+.hero{padding-block:36px 24px}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+.hero .org{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);margin-bottom:14px}
+.hero .org .mlogo{width:48px;height:48px;border:1px dashed var(--gold);border-radius:8px;display:grid;place-items:center;font-size:10px;color:var(--muted);flex:0 0 auto}
+.sub{font-family:var(--display);font-weight:700;font-size:22px;color:var(--navy);margin-top:8px}
+.slogan{font-family:var(--slogan);font-size:40px;color:var(--gold-text);line-height:1;margin-top:10px}
+.hero .lead{color:var(--muted);margin-top:10px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.hero-img{width:70%;max-width:360px;margin:0 auto}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.num{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 12px;text-align:center;box-shadow:var(--shadow);min-width:0}
+.num b{display:block;font-family:var(--display);font-weight:800;font-size:44px;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums}
+.num b.word{font-size:26px;padding-block:9px}
+.num span{display:block;font-size:14px;color:var(--muted);margin-top:8px;line-height:1.35}
+.nums .num:nth-child(5){grid-column:1/-1}
+/* sections */
+.two{display:grid;grid-template-columns:1fr;gap:24px;align-items:start}
+.quote{font-family:var(--quote);font-size:24px;color:var(--navy);line-height:1.45}
+.hl{background:var(--gold-light);border-right:6px solid var(--gold);border-radius:12px;padding:16px 18px}
+.bar{background:#1F456A;color:#F8F2E4;border-top:4px solid #B8975A;padding:14px 18px;border-radius:10px;font-size:18px;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.info{background:var(--info);border-radius:18px;padding:16px 18px}
+/* accordion */
+.acc{display:grid;gap:10px}
+.acc-h{width:100%;display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:right;cursor:pointer;min-height:48px}
+.acc-h .n{flex:0 0 44px;width:44px;height:44px;border-radius:50%;background:#1F456A;color:#F8F2E4;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:20px}
+.acc-h h3{flex:1;min-width:0}
+.acc-h .anc{flex:0 0 auto;color:var(--gold)}
+.acc-h .chev{flex:0 0 auto;transition:transform .2s;color:var(--muted)}
+.acc-h[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.acc-b{padding:10px 56px 4px 0;color:var(--ink)}
+.acc-b[hidden]{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-block;background:#1F456A;color:#F8F2E4;border-radius:999px;padding:2px 12px;font-size:14px;font-weight:700;white-space:nowrap}
+.chip.plan{background:var(--gold-light);color:var(--gold-text)}
+/* map */
+.mapwrap{display:grid;grid-template-columns:1fr;gap:20px}
+.map{position:relative;max-width:340px;margin:0 auto;width:100%}
+.map svg{width:100%;height:auto;display:block}
+.pin{cursor:pointer}
+.pin circle.dot{fill:var(--gold);stroke:var(--bg);stroke-width:2;transition:r .15s}
+.pin.active circle.dot{r:14}
+.pin.active circle.ring{stroke:var(--gold);stroke-width:2;fill:none}
+.pin text{font-family:var(--body);font-size:13px;font-weight:700;fill:var(--ink)}
+.extra{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.extra .pill{min-height:40px}
+.mapcard h3{margin-bottom:6px}
+.mapcard dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0}
+.mapcard dt{color:var(--muted);font-size:15px}.mapcard dd{margin:0;font-weight:700}
+/* timeline */
+.tl{position:relative;padding-right:28px;display:grid;gap:18px}
+.tl::before{content:"";position:absolute;right:8px;top:6px;bottom:6px;width:3px;background:var(--gold);border-radius:3px}
+.tli{position:relative;transition:opacity .3s}
+.tli.dim{opacity:.4}
+.tli::before{content:"⚓";position:absolute;right:-30px;top:2px;font-size:16px;color:var(--navy);background:var(--bg);line-height:1}
+.tli .big{font-family:var(--display);font-weight:800;font-size:30px;color:var(--navy);line-height:1.1;margin-top:4px}
+.tli details{margin-top:8px}
+.tli summary{cursor:pointer;color:var(--gold-text);font-weight:700;list-style:none}
+.tli summary::-webkit-details-marker{display:none}
+.tli summary::before{content:"+ ";}
+.tli details[open] summary::before{content:"– ";}
+.tli .det{margin-top:6px;font-size:16px}
+/* infra */
+.grid3{display:grid;grid-template-columns:1fr;gap:14px}
+.ic{transition:opacity .3s}
+.ic.dim{opacity:.4}
+.ic .ico{color:var(--gold);margin-bottom:8px}
+.ic h3{font-size:20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ic p{font-size:16px;margin-top:8px}
+/* stories */
+.stories{display:grid;grid-template-columns:1fr;gap:14px}
+.story img{aspect-ratio:4/3;object-fit:cover;width:100%;border-radius:12px}
+.story h3{margin-top:12px}.story p{font-size:16px;margin-top:6px}
+/* future */
+.future .two{align-items:center}
+.future .card{margin-bottom:12px}
+/* footer */
+.foot{background:#1F456A;color:#F8F2E4;padding-block:40px;text-align:center}
+.foot .slogan{color:#B8975A;font-size:48px}
+.foot p{margin-top:12px}
+.foot .thanks{font-family:var(--display);font-weight:700;font-size:18px}
+.foot .sig{font-size:16px;opacity:.85}
+.foot .btn{border-color:#B8975A;color:#B8975A;margin-top:16px}
+.foot img{width:96px;height:96px;margin:18px auto 0}
+.foot .fine{font-size:13px;opacity:.6;margin-top:14px}
+@media (min-width:768px){
+  h1{font-size:48px}h2{font-size:36px}body{font-size:19px}
+  .hero-grid{grid-template-columns:1.2fr .8fr}.hero-img{width:100%;max-width:420px}
+  .nums{grid-template-columns:repeat(5,1fr)}.nums .num:nth-child(5){grid-column:auto}.num b{font-size:56px}
+  .two{grid-template-columns:1fr 1fr}
+  .mapwrap{grid-template-columns:360px 1fr}
+  .grid3{grid-template-columns:1fr 1fr}.stories{grid-template-columns:repeat(3,1fr)}
+  .slogan{font-size:56px}
+}
+@media (min-width:1100px){h1{font-size:56px}h2{font-size:40px}.grid3{grid-template-columns:repeat(3,1fr)}.num b{font-size:64px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+@media print{.acc-b[hidden]{display:block!important}.btn,.filter{display:none}.tli.dim,.ic.dim{opacity:1}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="brand"><img src="img/logo_tzalach.png" alt="לוגו צל״ח"><span>לוח העשייה | צל"ח ארצי</span></div>
+  <a class="btn small" id="letterTop" href="#" aria-disabled="true">למכתב הרשמי</a>
+</div></header>
+<nav class="filter" aria-label="סינון לפי שנה"><div class="wrap" id="pills"></div></nav>
+<div class="wrap showing" id="showing">מציג: כל השנים, תשפ"ג–תשפ"ו</div>
+
+<section class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="org"><img src="img/logo_ministry.png" alt="סמל משרד החינוך" style="width:56px;height:56px;object-fit:contain;flex:0 0 auto"><span>משרד החינוך | המנהל הפדגוגי | אגף בכיר שירות פסיכולוגי ייעוצי | בשיתוף אגף הביטחון</span></div>
+      <h1>לוח העשייה: תוכנית הצל"ח הארצית</h1>
+      <div class="sub">צוות לניהול חירום בכל מוסד חינוכי</div>
+      <div class="slogan">מתכוננים בשגרה, מוכנים בחירום</div>
+      <p class="lead">תמונת עשייה תשפ"ג–תשפ"ו ומבט לתשפ"ז. בחרו שנה בפס העליון כדי לסנן.</p>
+      <div class="cta"><a class="btn primary" href="#what">לתמונת העשייה</a><a class="btn" id="letterHero" href="#" aria-disabled="true">להורדת המכתב הרשמי (PDF)</a></div>
+    </div>
+    <img class="ill hero-img" src="img/s01_anchor_map.jpg" alt="מפת ישראל בצבעי מים עם תשעה עוגנים זהובים">
+  </div>
+  <div class="nums" id="nums"></div>
+</div></section>
+
+<section id="why"><div class="wrap">
+  <h2>למה צל"ח? כי החירום לא מתואם מראש</h2>
+  <div class="two" style="margin-top:20px">
+    <div style="display:grid;gap:16px">
+      <p class="quote">"העיסוק בשגרה מתוכנן ברובו. החירום, לעומת זאת, מפתיע ואינו מתוכנן."</p>
+      <div class="hl">השנים האחרונות, עם מלחמת חרבות ברזל ומבצע עם כלביא, המחישו ביתר שאת את חשיבותה של מנהיגות ברורה ומתפקדת בכל מוסד חינוכי בעת חירום. מנהיגות כזו מחזקת את החוסן האישי והארגוני, את יכולת ההתמודדות ואת המסוגלות של הצוות החינוכי והקהילה הבית ספרית כולה.</div>
+      <div class="bar">הצל"ח הוא צוות הניהול של בית הספר. בשגרה הוא מתכונן, בחירום הוא מנהל, ואחרי האירוע הוא מחזיר לשגרה.</div>
+    </div>
+    <img class="ill" src="img/s02_steady_school.jpg" alt="בית ספר יציב על עוגן זהוב בתוך גלים" style="max-width:380px;margin:0 auto">
+  </div>
+  <div class="acc" style="margin-top:20px">
+    <div class="card">
+      <button class="acc-h" aria-expanded="false" aria-controls="why-b"><h3>להרחבה: שלושת שלבי ההתערבות</h3><svg class="chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="acc-b" id="why-b" hidden style="padding-right:0">
+        <div class="grid3">
+          <div class="info"><h3>1. מניעה ראשונית</h3><p>לפני האירוע: הכשרה, תרגול, תיק צל"ח, חוסן</p></div>
+          <div class="info"><h3>2. מניעה שניונית</h3><p>בעת האירוע: ניהול בשני ערוצים, סיוע מציל חיים וסיוע חינוכי רגשי, שעת הזהב</p></div>
+          <div class="info"><h3>3. מניעה שלישונית</h3><p>אחרי האירוע: ליווי ארוך טווח, חיבור רציפויות, הפקת לקחים</p></div>
+        </div>
+        <p class="muted" style="margin-top:12px">היערכות מטרימה של הצל"ח מאפשרת לתלמידים תחושה שרציפות החיים נמשכת, ומפחיתה את הסיכון להתפתחות תסמיני מצוקה נפשית.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="what"><div class="wrap">
+  <h2>חמישה עוגנים, תשתית אחת</h2>
+  <p class="muted" style="margin:8px 0 18px">בכל עוגן אותו מודל: ידע, תרגול בסימולציה, הפקת לקחים, ליווי.</p>
+  <div class="acc" id="anchors"></div>
+  <div class="card" style="margin-top:14px;border-top:6px solid var(--gold)"><h3>השותפים</h3><p style="margin-top:8px">אגף הביטחון במשרד החינוך | האגף לגיל הרך | פיקוד העורף | רשויות מקומיות וקב"טים | פיקוח כולל ופיקוח על הייעוץ | שפ"ח | מדריכות חירום מחוזיות</p></div>
+</div></section>
+
+<section id="where"><div class="wrap">
+  <h2>בכל מחוז, בכל מגזר</h2>
+  <div class="hl" style="margin-top:16px">התוכנית פועלת בששת המחוזות, בחינוך ההתיישבותי, בחינוך החרדי ובמזרח ירושלים, בחינוך הממלכתי, הממלכתי-דתי, הערבי, הדרוזי והבדואי.</div>
+  <div class="mapwrap" style="margin-top:20px">
+    <div>
+      <div class="map"><svg viewBox="0 0 300 700" role="img" aria-label="מפת ישראל עם נקודות לפי מחוז" id="mapsvg">
+        <path d="M200 18 L245 60 L240 140 L228 200 L222 260 L217 330 L202 400 L190 470 L170 540 L150 612 L134 664 L128 692 L120 664 L96 600 L70 520 L54 450 L76 400 L96 330 L106 260 L116 200 L131 140 L151 90 L172 40 Z" fill="#1F456A" fill-opacity=".12" stroke="#1F456A" stroke-opacity=".35" stroke-width="1.5"/>
+      </svg></div>
+      <div class="extra" id="extra"></div>
+    </div>
+    <div class="card mapcard" id="mapcard"></div>
+  </div>
+  <div class="bar" style="margin-top:20px">סך הכול למעלה מ-900 בתי ספר בהטמעות בשנה אחת, ו-59 כנסים בתשפ"ו: 7 בסיסי, 36 שמירת כשירות, 24 צל"ח גנים.</div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <h2>ארבע שנים, ארבע קפיצות מדרגה</h2>
+  <div class="tl" id="tl" style="margin-top:22px"></div>
+</div></section>
+
+<section id="infra"><div class="wrap">
+  <h2>תשתית התוכנית</h2>
+  <p class="muted" style="margin:8px 0 18px">מאחורי הכנסים וההטמעות עומד מערך קבוע של הכשרה, ידע ותרגול. כל פריט מסומן בשנה שבה נוסד.</p>
+  <div class="grid3" id="infra-grid"></div>
+  <div class="bar" style="margin-top:18px">תשתית קבועה היא מה שהופך תוכנית לתשתית ממלכתית.</div>
+</div></section>
+
+<section id="field"><div class="wrap">
+  <h2>שלושה סיפורים מהשטח</h2>
+  <div class="stories" style="margin-top:20px">
+    <div class="card story"><img class="ill" src="img/s05_gan_hibuki.jpg" alt="גננת וילדים בגן, ילדה מחבקת בובת כלב"><h3>הגן</h3><p>קרית אונו, נובמבר 2024: 300 גננות וסייעות מ-69 גנים מתרגלות יחד סימולציית ירי טילים. המטרה: למתן את תחושת הבדידות של הגננת, לחזק את המסוגלות שלה ולתת לה כלים.</p></div>
+    <div class="card story"><img class="ill" src="img/s02_steady_school.jpg" alt="בית ספר על עוגן"><h3>בית הספר</h3><p>הטמעה כפולה: מפגש ראשון עם צוות הצל"ח, מפגש שני עם כל הצוות החינוכי. סימולציה מתגלגלת של רעידת אדמה, פח"ע או תאונת אוטובוס, ובסופה הערכת מצב: מה אני יודע? מה אני מבין? מה אני עושה?</p></div>
+    <div class="card story"><img class="ill" src="img/s01_anchor_map.jpg" alt="מפת ישראל עם עוגנים"><h3>המדינה</h3><p>שבוע חירום, מרץ 2025: כ-25 מפגשי הכנה בשבוע אחד, מצפון ועד אילת, בזום ופנים אל פנים, ואחריהם תרגיל ארצי בכל מוסדות החינוך. אותה שפה, אותם תדריכים, אותה סימולציה.</p></div>
+  </div>
+</div></section>
+
+<section id="next" class="future"><div class="wrap">
+  <h2>תשפ"ז: ממשיכים לעגון</h2>
+  <div class="two" style="margin-top:20px">
+    <div>
+      <div class="card"><span class="chip plan">תשפ"ז (תכנון)</span><p style="margin-top:8px">תוכנית עבודה מחוזית משובצת עד אביב 2027 בכל המחוזות</p></div>
+      <div class="card"><span class="chip plan">תשפ"ז (תכנון)</span><p style="margin-top:8px">ניוזלטר חודשי לצוותי הצל"ח: ליווי לאורך השנה, מבניית הצוות ותיק הצל"ח בספטמבר ועד הפקת הלקחים ביוני</p></div>
+      <div class="card"><span class="chip plan">תשפ"ז (תכנון)</span><p style="margin-top:8px">המשך הרחבת צל"ח גנים והעמקת שמירת הכשירות</p></div>
+    </div>
+    <img class="ill" src="img/s06_anchor_rope_horizon.jpg" alt="חבל עוגן זהוב נמשך אל אופק של בוקר" style="max-width:420px;margin:0 auto">
+  </div>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <div class="slogan">מתכוננים בשגרה, מוכנים בחירום</div>
+  <p class="thanks">תודה לשותפים בדרך: אגף הביטחון, האגף לגיל הרך, פיקוד העורף, הרשויות, הפיקוח, השפ"חים ומדריכות החירום</p>
+  <p class="sig">ריבה שכטר | מנהלת היחידה להתמודדות במצבי משבר, חירום ואובדנות | המנהל הפדגוגי, אגף בכיר שירות פסיכולוגי ייעוצי</p>
+  <p class="sig">רויטל קאלו | רכזת תוכנית הצל"ח הארצית</p>
+  <a class="btn" id="letterFoot" href="#" aria-disabled="true">להורדת המכתב הרשמי (PDF)</a>
+  <img src="img/logo_tzalach.png" alt="">
+  <p class="fine">הנתונים נכונים לסיום שנת הלימודים תשפ"ו. נתוני תשפ"ז הם תכנון. מקורות: תוכנית העבודה הארצית, מכתבי המחוזות, מערך המעקב ואתר "צל"ח ארצי".</p>
+</div></footer>
+
+<script>
+// לעדכון שנתי: ערכו רק את הנתונים כאן
+const DATA = {
+  years: [
+    {id:'all', label:'כל השנים', showing:'מציג: כל השנים, תשפ"ג–תשפ"ו', hash:'all'},
+    {id:'5783', label:'תשפ"ג', showing:'מציג: תשפ"ג', hash:'5783'},
+    {id:'5784', label:'תשפ"ד', showing:'מציג: תשפ"ד', hash:'5784'},
+    {id:'5785', label:'תשפ"ה', showing:'מציג: תשפ"ה', hash:'5785'},
+    {id:'5786', label:'תשפ"ו', showing:'מציג: תשפ"ו', hash:'5786'},
+    {id:'5787', label:'תשפ"ז (תכנון)', showing:'מציג: תשפ"ז (נתוני תכנון)', hash:'5787', plan:true}
+  ],
+  nums: {
+    all:  [{v:900,suf:'+',l:'בתי ספר בהטמעות כבר בשנת ההשקה'},{v:9,l:'מחוזות ומגזרי פיקוח'},{w:'אלפי',l:'גנים בכנסי צל"ח גנים'},{v:59,l:'כנסים בתשפ"ו'},{v:40,suf:'+',l:'מטמיעים ומטמיעות'}],
+    5783: [{v:900,suf:'+',l:'בתי ספר בהטמעות בשנת ההשקה'},{v:9,l:'מחוזות ומגזרי פיקוח'},{w:'פיילוט',l:'צל"ח גנים: פיילוט'},{w:'בכל המחוזות',l:'כנסי צל"ח בסיסי ושמירת כשירות'},{v:30,l:'מטמיעים ומטמיעות'}],
+    5784: [{v:438,l:'בתי ספר מתוכננים להטמעה'},{v:9,l:'מחוזות ומגזרי פיקוח'},{v:8,l:'כנסי גננות ראשונים, 120–200 משתתפות בכל אחד'},{v:3,l:'הכשרות ארציות: מובילי צל"ח, יועצות גנים, קב"טים'},{v:30,l:'מטמיעים ומטמיעות'}],
+    5785: [{w:'מחוזי',l:'הטמעות במיקוד מחוזי ובאופן וולונטרי'},{v:9,l:'מחוזות ומגזרי פיקוח'},{v:4100,suf:'+',l:'גנים: כ-2,700 במרכז, כ-1,440 בצפון'},{v:25,l:'מפגשי הכנה בשבוע חירום ארצי'},{v:30,l:'מטמיעים ומטמיעות'}],
+    5786: [{v:89,l:'בתי ספר נרשמו להטמעות, מהם 60 בצפון'},{v:9,l:'מחוזות ומגזרי פיקוח'},{v:1650,l:'גנים בצפון, כ-2,100 משתתפות'},{v:59,l:'כנסים: 36 שמירת כשירות, 24 גנים, 7 בסיסי'},{v:40,suf:'+',l:'מטמיעים, כולל מומחי חירום מפיקוד העורף'}],
+    5787: [{w:'מחוזי',l:'הטמעות לפי תוכנית מחוזית'},{v:9,l:'מחוזות ומגזרי פיקוח'},{w:'המשך',l:'המשך הרחבת צל"ח גנים'},{v:2027,l:'גאנט כנסים משובץ עד אביב 2027'},{v:10,l:'גיליונות ניוזלטר חודשיים'}]
+  },
+  anchors: [
+    {t:'צל"ח בסיסי', b:'כנס רשותי או אשכולי למנהלים, סגנים, יועצות ורכזי ביטחון: הרצאה, מודל מעש"ה, תרגול סימולציה. פותח כניסה להטמעה בבתי הספר. מאז תשפ"ג.'},
+    {t:'הטמעות בבתי הספר', b:'שני מפגשי הדרכה בבית הספר בהובלת מטמיע/ת צל"ח: מפגש ראשון לצוות הצל"ח, מפגש שני לצוות החינוכי ולצוות הניהול, כולל סימולציה מתגלגלת והערכת מצב: מה אני יודע? מה אני מבין? מה אני עושה? מאז תשפ"ג.'},
+    {t:'שמירת כשירות', b:'רענון שנתי לצוותים מוכשרים, בדגש על התרגיל הארצי ("שבוע חירום") ועל מיקוד מחוזי, וכנסי מנהלים חדשים. הואץ בתשפ"ד.'},
+    {t:'צל"ח גנים', b:'הרחבה לגילאי 3–6 בשיתוף האגף לגיל הרך: כנס גננות, סייעות, יועצות גנים וקב"טים; ערכת סיוע לגננת להתמודדות במצבי משבר וחירום; ליווי המשך עם מדריכת חירום, יועצת גנים, פסיכולוג הגן וקב"ט הרשות. מאז תשפ"ד.'},
+    {t:'תשתית ידע ובקרה ארצית', b:'אתר מלווה "צל"ח ארצי": מצגות כנסים ומצגות מטמיעים, תיק צל"ח 2024, בנק סימולציות (פח"ע, רעידת אדמה בעברית ובערבית, ירי טילים, תאונת אוטובוס בטיול שנתי), תדריכים לניהול סימולציה, מערך מעקב סטטוסים להטמעות ולכנסים, ו"חיבוקי" לגיל הרך.'}
+  ],
+  districts: [
+    {id:'north', name:'צפון', x:178,y:112, schools:'כ-350', conf:'22 כנסים: 7 שמירת כשירות, 15 צל"ח גנים', confN:22, gan:{5785:'כ-1,440 גנים ב-38 כנסים',5786:'כ-1,650 גנים, כ-2,100 משתתפות'}},
+    {id:'haifa', name:'חיפה', x:128,y:172, schools:'107', conf:'8 כנסי שמירת כשירות', confN:8},
+    {id:'center', name:'מרכז', x:122,y:292, schools:'192', conf:'5 כנסים: 4 שמירת כשירות, 1 צל"ח גנים', confN:5, gan:{5785:'8 אשכולות זום, כ-2,700 גנים'}},
+    {id:'ta', name:'תל אביב', x:98,y:252, schools:'137', conf:'8 כנסים: 1 בסיסי, 7 שמירת כשירות', confN:8, gan:{5785:'קרית אונו: 300 גננות וסייעות מ-69 גנים'}},
+    {id:'jlm', name:'ירושלים ומנח"י', x:165,y:336, schools:'92 בירושלים, 169 במנח"י', conf:'14 כנסים: 1 בסיסי, 8 שמירת כשירות, 5 צל"ח גנים', confN:14},
+    {id:'ejlm', name:'מזרח ירושלים', x:186,y:322, small:true, schools:'50', conf:'במסגרת מנח"י', confN:null},
+    {id:'south', name:'דרום', x:122,y:486, schools:'154', conf:'10 כנסים: 5 בסיסי, 2 שמירת כשירות, 3 צל"ח גנים', confN:10},
+    {id:'hity', name:'התיישבותי', extra:true, schools:'67', conf:'שמירת כשירות במסגרת שבוע חירום', confN:null},
+    {id:'haredi', name:'חרדי', extra:true, schools:'175', conf:'שמירת כשירות במסגרת שבוע חירום', confN:null}
+  ],
+  timeline: [
+    {y:'5783', chip:'תשפ"ג', t:'השקה ארצית', big:'900+ בתי ספר', d:'מפגשי חשיפה לרשויות ולפיקוח בכל המחוזות; רישום להטמעות עלה מ-112 בתי ספר באוקטובר ל-520 במרץ, ועוד 377 ללא רישום מקוון; כנסים בכל המחוזות ובכל המגזרים.'},
+    {y:'5784', chip:'תשפ"ד', t:'התאמה לחרבות ברזל', big:'30 מטמיעים', d:'מיקוד בשמירת כשירות; השקת צל"ח גנים; הכשרות ארציות למובילי צל"ח, ליועצות גנים ולקב"טים; כנסי גננות של 120–200 משתתפות; תרגיל ארצי בצפון.'},
+    {y:'5785', chip:'תשפ"ה', t:'היקף', big:'2,700 גנים במחוז מרכז', d:'8 אשכולות זום במחוז מרכז; קרית אונו: 300 גננות וסייעות מ-69 גנים; צפון: כ-1,440 גנים ב-38 כנסים מקומיים; שבוע חירום ארצי (2–6.3.25) עם כ-25 מפגשי הכנה בכל המחוזות; כנסי מנהלים חדשים.'},
+    {y:'5786', chip:'תשפ"ו', t:'העמקה', big:'59 כנסים', d:'36 שמירת כשירות, 24 צל"ח גנים, 7 בסיסי; צפון: כ-1,650 גנים, כ-2,100 משתתפות; 89 בתי ספר נרשמו להטמעות, מהם 60 בצפון; קליטת מומחי חירום מפיקוד העורף למערך המטמיעים; אתר מלווה ובנק סימולציות דו-לשוני.'},
+    {y:'5787', chip:'תשפ"ז (תכנון)', plan:true, t:'מבט קדימה', big:'10 גיליונות ניוזלטר', d:'תוכנית עבודה מחוזית משובצת עד אביב 2027; ניוזלטר חודשי לצוותי הצל"ח: ספטמבר בניית צוות ותיק צל"ח, אוקטובר סוגי מצבי חירום, נובמבר מנהיגות בצל החירום המתמשך, דצמבר גורמי חוץ, ינואר משאבים פנימיים, פברואר תרגול וסימולציות, מרץ טיפול באירוע בשני ערוצים, אפריל חוסן וחירות נפשית, מאי חיבור רציפויות, יוני הפקת לקחים; המשך הרחבת צל"ח גנים.'}
+  ],
+  infra: [
+    {y:5783, chip:'תשפ"ג', ico:'people', t:'מערך המטמיעים', d:'למעלה מ-40 מטמיעים ומטמיעות, רובם יועצות חינוכיות, ובתשפ"ו גם מומחי חירום מפיקוד העורף. הכשרת מטמיעים נכנסים (שני ימי הכשרה), מפגש מטמיעים ארצי, מפגש סיכום ולמידה בסוף שנה, וליווי לאורך השנה.'},
+    {y:5784, chip:'תשפ"ד', ico:'check', t:'הכשרות מדריכות וצוותי כנסים', d:'הכשרת מדריכות לכנסים (ספטמבר), כנס מובילי צל"ח ארצי, הכשרת יועצות גנים ארצית (נובמבר), והכנה מחוזית לפני כל כנס: מפגש עם מפקחות הייעוץ, הקב"ט המחוזי ומדריכת החירום.'},
+    {y:5784, chip:'תשפ"ד', ico:'shield', t:'כנס קב"טים ארצי', d:'כנס ארצי לקב"טי מוסדות החינוך בשיתוף אגף הביטחון, הכולל תרגול סימולציה (ירושלים, אפריל 2024), וקורס השלמה לקב"טים (אפריל 2025). השותפות עם מערך הביטחון היא עמוד תווך של התוכנית.'},
+    {y:5783, chip:'תשפ"ג', ico:'book', t:'תדריכים ותיק צל"ח', d:'תיק צל"ח 2024, תדריכי שפ"י לניהול אירוע, תדריכים לניהול סימולציה, ומצגות הכשרה אחידות לכנסים ולמטמיעים (צל"ח בסיסי, שמירת כשירות, צל"ח גנים, כנס קב"טים). כולם זמינים באתר המלווה.'},
+    {y:5783, chip:'תשפ"ג', ico:'cards', t:'בנק סימולציות', d:'תרחישים מוכנים לתרגול בכנסים ובהטמעות: פח"ע, רעידת אדמה (בעברית ובערבית), ירי טילים, תאונת אוטובוס בטיול שנתי, תאונת דרכים ברכב הסעות, אלרגיה בגן, דריסה. לכל תרחיש תמונת פתיחה, עדכונים מתגלגלים והערכת מצב: מה אני יודע? מה אני מבין? מה אני עושה?'},
+    {y:5787, chip:'תשפ"ז (תכנון)', plan:true, ico:'mail', t:'ניוזלטר חודשי לצוותי צל"ח', d:'עשרה גיליונות, ספטמבר עד יוני, שמלווים את הצל"ח לאורך השנה: בניית צוות ותיק צל"ח, סוגי מצבי חירום, מנהיגות בצל החירום המתמשך, גורמי חוץ, משאבים פנימיים, תרגול וסימולציות, טיפול באירוע בשני ערוצים, חוסן וחירות נפשית, חיבור רציפויות, הפקת לקחים. כל גיליון מותאם לשלושה שלבי גיל: גיל רך, יסודי, על-יסודי.'}
+  ],
+  letterUrl: 'letter.html'
+};
+
+const ICONS={
+ people:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5M14.5 14.2c2.8 0 5 1.8 5 4.3"/></svg>',
+ check:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 12l3 3 5-6"/></svg>',
+ shield:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6z"/></svg>',
+ book:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 6c-2-1.5-5-1.5-8-.5v13c3-1 6-1 8 .5 2-1.5 5-1.5 8-.5V5.5c-3-1-6-1-8 .5z"/><path d="M12 6v13"/></svg>',
+ cards:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="12" height="14" rx="2"/><path d="M8 4h11a2 2 0 012 2v12"/></svg>',
+ mail:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+ anchor:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="2"/><path d="M12 7v14M5 12h14M4 15c1.5 4 4.5 6 8 6s6.5-2 8-6"/></svg>'
+};
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let current='all', activeD='north';
+
+/* pills */
+const pillsEl=$('#pills');
+DATA.years.forEach(y=>{const b=document.createElement('button');b.className='pill'+(y.plan?' plan':'');b.textContent=y.label;b.dataset.y=y.id;b.setAttribute('aria-pressed',y.id===current);b.addEventListener('click',()=>setYear(y.id,true));pillsEl.appendChild(b);});
+
+/* numbers */
+const numsEl=$('#nums');
+function renderNums(){
+  const items=DATA.nums[current];
+  numsEl.innerHTML=items.map((it,i)=>`<div class="num"><b class="${it.w?'word':''}" data-i="${i}">${it.w?it.w:'0'}</b><span>${it.l}</span></div>`).join('');
+  items.forEach((it,i)=>{if(it.w)return;const el=numsEl.querySelector(`b[data-i="${i}"]`);count(el,it.v,it.suf||'');});
+}
+function count(el,target,suf){
+  if(reduce){el.textContent=target.toLocaleString('he-IL')+suf;return;}
+  const t0=performance.now(),dur=700;
+  (function f(t){const p=Math.min(1,(t-t0)/dur);const v=Math.round(target*(1-Math.pow(1-p,3)));el.textContent=v.toLocaleString('he-IL')+(p===1?suf:'');if(p<1)requestAnimationFrame(f);})(t0);
+}
+
+/* anchors accordion */
+const accEl=$('#anchors');
+accEl.innerHTML=DATA.anchors.map((a,i)=>`<div class="card"><button class="acc-h" aria-expanded="false" aria-controls="a${i}"><span class="n">${i+1}</span><h3>${a.t}</h3><span class="anc">${ICONS.anchor}</span><svg class="chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><div class="acc-b" id="a${i}" hidden>${a.b}</div></div>`).join('');
+document.querySelectorAll('.acc-h').forEach(h=>h.addEventListener('click',()=>{const o=h.getAttribute('aria-expanded')==='true';h.setAttribute('aria-expanded',!o);document.getElementById(h.getAttribute('aria-controls')).hidden=o;}));
+if(innerWidth>=768){const f=accEl.querySelector('.acc-h');f.setAttribute('aria-expanded','true');document.getElementById('a0').hidden=false;}
+
+/* map */
+const svg=$('#mapsvg'),ns='http://www.w3.org/2000/svg';
+DATA.districts.filter(d=>!d.extra).forEach(d=>{
+  const g=document.createElementNS(ns,'g');g.setAttribute('class','pin');g.dataset.id=d.id;g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',d.name);
+  const r=d.small?7:11;
+  g.innerHTML=`<circle class="ring" cx="${d.x}" cy="${d.y}" r="${r+8}" fill="none" stroke="none"/><circle class="dot" cx="${d.x}" cy="${d.y}" r="${r}"/><text x="${d.x+(d.id==='ta'||d.id==='haifa'||d.id==='center'||d.id==='south'?-16:16)}" y="${d.y+5}" text-anchor="${d.id==='ta'||d.id==='haifa'||d.id==='center'||d.id==='south'?'end':'start'}">${d.name}</text>`;
+  g.addEventListener('click',()=>setDistrict(d.id));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setDistrict(d.id);}});
+  svg.appendChild(g);
+});
+const extraEl=$('#extra');
+DATA.districts.filter(d=>d.extra).forEach(d=>{const b=document.createElement('button');b.className='pill';b.textContent=d.name;b.dataset.id=d.id;b.addEventListener('click',()=>setDistrict(d.id));extraEl.appendChild(b);});
+function setDistrict(id){
+  activeD=id;
+  document.querySelectorAll('.pin').forEach(p=>p.classList.toggle('active',p.dataset.id===id));
+  extraEl.querySelectorAll('.pill').forEach(p=>p.setAttribute('aria-pressed',p.dataset.id===id));
+  renderMapCard();
+}
+function renderMapCard(){
+  const d=DATA.districts.find(x=>x.id===activeD);
+  let rows=`<dt>בתי ספר בהטמעות בשנת ההשקה (תשפ"ג)</dt><dd>${d.schools}</dd>`;
+  if(current==='all'||current==='5786')rows+=`<dt>כנסים בתשפ"ו</dt><dd>${d.conf}</dd>`;
+  if(d.gan&&d.gan[current])rows+=`<dt>צל"ח גנים ${DATA.years.find(y=>y.id===current).label}</dt><dd>${d.gan[current]}</dd>`;
+  if(current==='5785'&&!d.gan)rows+=`<dt>תשפ"ה</dt><dd>שמירת כשירות במסגרת שבוע חירום הארצי</dd>`;
+  if(current==='5784')rows+=`<dt>תשפ"ד</dt><dd>התאמת התוכנית למלחמה: מיקוד בשמירת כשירות והשקת צל"ח גנים</dd>`;
+  if(current==='5787')rows+=`<dt>תשפ"ז (תכנון)</dt><dd>לפי תוכנית העבודה המחוזית, גאנט עד אביב 2027</dd>`;
+  $('#mapcard').innerHTML=`<h3>${d.name}</h3><dl>${rows}</dl>`;
+}
+
+/* timeline */
+$('#tl').innerHTML=DATA.timeline.map(t=>`<div class="tli" data-y="${t.y}"><span class="chip ${t.plan?'plan':''}">${t.chip}</span><div class="big">${t.t}</div><div style="font-family:var(--display);font-weight:700;color:var(--gold-text);font-size:20px">${t.big}</div><details><summary>פרטים</summary><div class="det">${t.d}</div></details></div>`).join('');
+
+/* infra */
+$('#infra-grid').innerHTML=DATA.infra.map(i=>`<div class="card ic" data-y="${i.y}"><div class="ico">${ICONS[i.ico]}</div><h3>${i.t} <span class="chip ${i.plan?'plan':''}">${i.chip}</span></h3><p>${i.d}</p></div>`).join('');
+
+/* year filter */
+function setYear(id,push){
+  current=id;
+  pillsEl.querySelectorAll('.pill').forEach(p=>p.setAttribute('aria-pressed',p.dataset.y===id));
+  $('#showing').textContent=DATA.years.find(y=>y.id===id).showing;
+  renderNums();renderMapCard();
+  document.querySelectorAll('.tli').forEach(el=>el.classList.toggle('dim',id!=='all'&&el.dataset.y!==id));
+  document.querySelectorAll('.ic').forEach(el=>el.classList.toggle('dim',id!=='all'&&Number(el.dataset.y)>Number(id)));
+  if(push){try{history.replaceState(null,'','#'+(id==='all'?'all':id));}catch(e){}}
+}
+function fromHash(){const h=location.hash.replace('#','');const y=DATA.years.find(x=>x.hash===h);setYear(y?y.id:'all',false);}
+addEventListener('hashchange',fromHash);
+
+/* letter buttons */
+['letterTop','letterHero','letterFoot'].forEach(id=>{const a=document.getElementById(id);if(DATA.letterUrl){a.href=DATA.letterUrl;a.removeAttribute('aria-disabled');a.textContent=a.textContent.replace('להורדת המכתב הרשמי (PDF)','למכתב הרשמי');}else{a.textContent=a.textContent.replace('להורדת המכתב הרשמי (PDF)','המכתב הרשמי (יצורף בקרוב)').replace('למכתב הרשמי','המכתב (בקרוב)');a.addEventListener('click',e=>e.preventDefault());}});
+
+setDistrict('north');fromHash();
+</script>
+
+</body>
+</html>
